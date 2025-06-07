@@ -1,7 +1,7 @@
 const ball = document.querySelector('.ball') as HTMLElement;
 const boud = document.querySelector('.bound') as HTMLElement;
 
-const GRAVITAIONAL_ACCELERATION: number = 1.5;
+const GRAVITAIONAL_ACCELERATION: number = 0.98; // i'm 10% of original g to make animation look better
 const ENERGY_LOSS: number = .8;
 const AIR_FRICTION: number = 0.99;
 const BALL_WIDTH: number = ball.getBoundingClientRect().width;
@@ -9,8 +9,6 @@ const BALL_HEIGHT: number = ball.getBoundingClientRect().height;
 
                 // [x, y]
 let velocity: [number, number] = [35, 0];
-
-
 let position: [number, number] = [0, 0];
 
 const accelerate = (x: number, y: number): void => {
@@ -43,25 +41,19 @@ const updatePosition = (): void => {
         position[1] = window.innerHeight - BALL_HEIGHT;
         velocity[1] = Math.abs(velocity[1]) * -ENERGY_LOSS;
     }
-
+    // upper bound
     if (position[1] <= 0) {
         position[1] = 0;
         velocity[1] = Math.abs(velocity[1]) * ENERGY_LOSS;
     }
 
-    
-
-
     ball.style.left = position[0] + 'px';
     ball.style.top = position[1] + 'px';
-
 }
-
 
 const animate = (): void => {
     updatePosition();
-    requestAnimationFrame(animate)
+    requestAnimationFrame(animate);
 }
 
 animate();
-
