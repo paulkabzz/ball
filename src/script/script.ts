@@ -1,21 +1,17 @@
 const ball = document.querySelector('.ball') as HTMLElement;
 const boud = document.querySelector('.bound') as HTMLElement;
 
-const GRAVITAIONAL_ACCELERATION: number = 9.81;
+const GRAVITAIONAL_ACCELERATION: number = 1.5;
+const ENERGY_LOSS = .95;
+const AIR_FRICTION = 0.95;
+const BALL_WIDTH: number = ball.getBoundingClientRect().width;
+const BALL_HEIGHT: number = ball.getBoundingClientRect().height;
 
                 // [x, y]
-let velocity: [number, number] = [0, 0];
+let velocity: [number, number] = [2, 0];
 
-// Boundaries
-let upperBound: number = boud.offsetTop;
-let lowerBound: number = upperBound + boud.offsetHeight;
-let leftBound: number = boud.offsetLeft;
-let rightBound: number = leftBound + boud.offsetWidth;
 
 let position: [number, number] = [0, 0];
-
-
-let time: number = 0;
 
 const accelerate = (x: number, y: number): void => {
     velocity[0] += x;
@@ -23,21 +19,46 @@ const accelerate = (x: number, y: number): void => {
 }
 
 const updatePosition = (): void => {
+    accelerate(0, GRAVITAIONAL_ACCELERATION);
+
+    velocity[0] * AIR_FRICTION;
     position[0] += velocity[0]; 
     position[1] += velocity[1];
 
+    // right bound
+    if (position[0] >= window.innerWidth - BALL_WIDTH) {
+        position[0] = window.innerWidth - BALL_WIDTH;
+        velocity[0] = Math.abs(velocity[0]) * -ENERGY_LOSS;
+    }
+
+    // left bound
+    if (position[0] <= 0) {
+        position[0] = 0;
+        velocity[0] = Math.abs(velocity[0]) * ENERGY_LOSS;
+    }
+
+    // lower bound
+    if (position[1] >= window.innerHeight - BALL_HEIGHT) {
+        position[1] = window.innerHeight - BALL_HEIGHT;
+        velocity[1] = Math.abs(velocity[1]) * -ENERGY_LOSS;
+    }
+
+    if (position[1] <= 0) {
+        position[1] = 0;
+        velocity[1] = Math.abs(velocity[1]) * ENERGY_LOSS;
+    }
+
+
     ball.style.left = position[0] + 'px';
     ball.style.top = position[1] + 'px';
+
 }
 
-window.addEventListener('click', e => {
-    alert(`pageX: ${e.pageX}, right: ${rightBound}`)
-})
 
-const z = setInterval(() => {
-    accelerate(5, GRAVITAIONAL_ACCELERATION);
+const animate = (): void => {
     updatePosition();
-    if (position[0] > rightBound ) velocity[0] *= -1;
-    if (position[1] >= lowerBound) velocity[1] *= -0.95;
-}, 100);
+    requestAnimationFrame(animate)
+}
+
+animate();
 
