@@ -8,9 +8,9 @@ let velocity: [number, number] = [0, 0];
 
 // Boundaries
 let upperBound: number = boud.offsetTop;
-let lowerBound: number = upperBound - (2*boud.offsetHeight);
+let lowerBound: number = upperBound + boud.offsetHeight;
 let leftBound: number = boud.offsetLeft;
-let rightBound: number = leftBound + 2*boud.offsetWidth;
+let rightBound: number = leftBound + boud.offsetWidth;
 
 let position: [number, number] = [0, 0];
 
@@ -30,10 +30,14 @@ const updatePosition = (): void => {
     ball.style.top = position[1] + 'px';
 }
 
+window.addEventListener('click', e => {
+    alert(`pageX: ${e.pageX}, right: ${rightBound}`)
+})
+
 const z = setInterval(() => {
     accelerate(5, GRAVITAIONAL_ACCELERATION);
     updatePosition();
-    if (position[0] >= rightBound || velocity[0] <= leftBound ) velocity[0] *= -0.95;
-    if (position[1] < lowerBound || position[1] > upperBound) velocity[1] *= -0.95;
+    if (position[0] > rightBound ) velocity[0] *= -1;
+    if (position[1] >= lowerBound) velocity[1] *= -0.95;
 }, 100);
 
