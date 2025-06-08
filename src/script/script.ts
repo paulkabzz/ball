@@ -7,12 +7,14 @@ const AIR_FRICTION: number = .99;
 const BALL_WIDTH: number = ball.getBoundingClientRect().width;
 const BALL_HEIGHT: number = ball.getBoundingClientRect().height;
 
-                // [x, y]
-let velocity_1: [number, number] = [Math.random() * 250, Math.random() * 250];
-let position_1: [number, number] = [Math.random() * (window.innerWidth - BALL_HEIGHT), Math.random() * (window.innerHeight - BALL_HEIGHT)];
+type Vector = [number, number];
 
-let position_2: [number, number] = [Math.random() * (window.innerWidth - BALL_HEIGHT), Math.random() * (window.innerHeight - BALL_HEIGHT)];
-let velocity_2: [number, number] = [Math.random() * 250, Math.random() * 250];
+                                      // [x, y]
+let velocity_1: Vector = [Math.random() * 250, Math.random() * 250];
+let position_1: Vector = [Math.random() * (window.innerWidth - BALL_HEIGHT), Math.random() * (window.innerHeight - BALL_HEIGHT)];
+
+let position_2: Vector = [Math.random() * (window.innerWidth - BALL_HEIGHT), Math.random() * (window.innerHeight - BALL_HEIGHT)];
+let velocity_2: Vector = [Math.random() * 250, Math.random() * 250];
 
 
 const accelerate = (x: number, y: number): void => {
