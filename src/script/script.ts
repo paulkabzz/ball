@@ -2,7 +2,7 @@ const ball = document.querySelector('.ball') as HTMLElement;
 const ball2 = document.querySelector('.ball-2') as HTMLElement;
 
 const GRAVITAIONAL_ACCELERATION: number = .98; // i'm making this 10% of original g to make animation look better
-const ENERGY_LOSS: number = Math.random();
+let ENERGY_LOSS: number = Math.random();
 const AIR_FRICTION: number = .99;
 const BALL_WIDTH: number = ball.getBoundingClientRect().width;
 const BALL_HEIGHT: number = ball.getBoundingClientRect().height;
@@ -159,6 +159,7 @@ const posX2Input = document.getElementById('posX2') as HTMLInputElement | null;
 const posY2Input = document.getElementById('posY2') as HTMLInputElement | null;
 const velX2Input = document.getElementById('velX2') as HTMLInputElement | null;
 const velY2Input = document.getElementById('velY2') as HTMLInputElement | null;
+const energyLossInput = document.getElementById('energyLoss') as HTMLInputElement | null;
 const applyBtn = document.getElementById('applyBtn') as HTMLButtonElement | null;
 
 const applyInputs = () => {
@@ -169,7 +170,7 @@ const applyInputs = () => {
     }
     if (posYInput && posYInput.value !== '') {
         const yPct = clamp(parseFloat(posYInput.value), 0, 1);
-        position_1[1] = yPct * (window.innerHeight - BALL_HEIGHT);
+        position_1[1] = (1 - yPct) * (window.innerHeight - BALL_HEIGHT);
     }
 
     // Velocity in abstract units mapped to px/frame
@@ -192,7 +193,7 @@ const applyInputs = () => {
     }
     if (posY2Input && posY2Input.value !== '') {
         const y2Pct = clamp(parseFloat(posY2Input.value), 0, 1);
-        position_2[1] = y2Pct * (window.innerHeight - BALL_HEIGHT);
+        position_2[1] = (1 - y2Pct) * (window.innerHeight - BALL_HEIGHT);
     }
 
     if (velX2Input && velX2Input.value !== '') {
@@ -205,6 +206,14 @@ const applyInputs = () => {
         const vy2 = parseFloat(velY2Input.value);
         if (!Number.isNaN(vy2)) {
             velocity_2[1] = vy2 * VELOCITY_UNIT_TO_PX_PER_FRAME;
+        }
+    }
+
+    if (energyLossInput && energyLossInput.value !== '') {
+        const e = clamp(parseFloat(energyLossInput.value), 0, 1);
+        if (!Number.isNaN(e)) {
+            ENERGY_LOSS = 1 - e;
+
         }
     }
 };
