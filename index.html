@@ -6,8 +6,54 @@
     <script type="module" defer src="/src/script/script.ts"></script>
     <link rel="stylesheet" href="src/style.css">
     <title>Document</title>
+    <style>
+        .controls {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+        .row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+        label {
+            margin-right: 10px;
+        }
+    </style>
 </head>
 <body>
+        <div class="controls">
+            <div class="row">
+                <label for="posX">X<sub>1</sub></label>
+                <input id="posX" type="number" step="0.01" min="0" max="1" placeholder="m" />
+                <label for="posY">y<sub>1</sub></label>
+                <input id="posY" type="number" step="0.01" min="0" max="1" placeholder="m" />
+            </div>
+            <div class="row">
+                <label for="velX">v<sub>x<sub>1</sub></label>
+                <input id="velX" type="number" step="0.1" placeholder="m/s" />
+                <label for="velY">v<sub>y <sub>1</sub></label>
+                <input id="velY" type="number" step="0.1" placeholder="m/s" />
+            </div>
+            <hr />
+            <div class="row">
+                <label for="posX2">x<sub></sub><sub>2</sub></label>
+                <input id="posX2" type="number" step="0.01" min="0" max="1" placeholder="m" />
+                <label for="posY2">y<sub></sub><sub></sub><sub>2</sub></label>
+                <input id="posY2" type="number" step="0.01" min="0" max="1" placeholder="m" />
+            </div>
+            <div class="row">
+                <label for="velX2">v<sub>x<sub>2</sub></sub></label>
+                <input id="velX2" type="number" step="0.1" placeholder="m/s" />
+                <label for="velY2">v<sub>y<sub>2</sub></sub></label>
+                <input id="velY2" type="number" step="0.1" placeholder="m/s" />
+            </div>
+            <p>
+                x, y ϵ [0, 1] and v ϵ ℝ
+            </p>
+            <button id="applyBtn">Start</button>
+        </div>
         <div class="ball"></div>
         <div class="ball-2"></div>
 </body>

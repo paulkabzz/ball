@@ -144,4 +144,73 @@ const animate = (): void => {
     requestAnimationFrame(animate);
 }
 
+// The values of x, y, v where initially randomised, but I'll give people the ability to add in their own values
+
+// Simple unit scale: 1 velocity unit ~= 10 px/frame (~600 px/s @60fps)
+const VELOCITY_UNIT_TO_PX_PER_FRAME = 10;
+
+const clamp = (v: number, min: number, max: number) => Math.max(min, Math.min(max, v));
+
+const posXInput = document.getElementById('posX') as HTMLInputElement | null;
+const posYInput = document.getElementById('posY') as HTMLInputElement | null;
+const velXInput = document.getElementById('velX') as HTMLInputElement | null;
+const velYInput = document.getElementById('velY') as HTMLInputElement | null;
+const posX2Input = document.getElementById('posX2') as HTMLInputElement | null;
+const posY2Input = document.getElementById('posY2') as HTMLInputElement | null;
+const velX2Input = document.getElementById('velX2') as HTMLInputElement | null;
+const velY2Input = document.getElementById('velY2') as HTMLInputElement | null;
+const applyBtn = document.getElementById('applyBtn') as HTMLButtonElement | null;
+
+const applyInputs = () => {
+    // Position as percentage of viewport [0..1]
+    if (posXInput && posXInput.value !== '') {
+        const xPct = clamp(parseFloat(posXInput.value), 0, 1);
+        position_1[0] = xPct * (window.innerWidth - BALL_WIDTH);
+    }
+    if (posYInput && posYInput.value !== '') {
+        const yPct = clamp(parseFloat(posYInput.value), 0, 1);
+        position_1[1] = yPct * (window.innerHeight - BALL_HEIGHT);
+    }
+
+    // Velocity in abstract units mapped to px/frame
+    if (velXInput && velXInput.value !== '') {
+        const vx = parseFloat(velXInput.value);
+        if (!Number.isNaN(vx)) {
+            velocity_1[0] = vx * VELOCITY_UNIT_TO_PX_PER_FRAME;
+        }
+    }
+    if (velYInput && velYInput.value !== '') {
+        const vy = parseFloat(velYInput.value);
+        if (!Number.isNaN(vy)) {
+            velocity_1[1] = vy * VELOCITY_UNIT_TO_PX_PER_FRAME;
+        }
+    }
+
+    if (posX2Input && posX2Input.value !== '') {
+        const x2Pct = clamp(parseFloat(posX2Input.value), 0, 1);
+        position_2[0] = x2Pct * (window.innerWidth - BALL_WIDTH);
+    }
+    if (posY2Input && posY2Input.value !== '') {
+        const y2Pct = clamp(parseFloat(posY2Input.value), 0, 1);
+        position_2[1] = y2Pct * (window.innerHeight - BALL_HEIGHT);
+    }
+
+    if (velX2Input && velX2Input.value !== '') {
+        const vx2 = parseFloat(velX2Input.value);
+        if (!Number.isNaN(vx2)) {
+            velocity_2[0] = vx2 * VELOCITY_UNIT_TO_PX_PER_FRAME;
+        }
+    }
+    if (velY2Input && velY2Input.value !== '') {
+        const vy2 = parseFloat(velY2Input.value);
+        if (!Number.isNaN(vy2)) {
+            velocity_2[1] = vy2 * VELOCITY_UNIT_TO_PX_PER_FRAME;
+        }
+    }
+};
+
+if (applyBtn) {
+    applyBtn.addEventListener('click', applyInputs);
+}
+
 animate();
